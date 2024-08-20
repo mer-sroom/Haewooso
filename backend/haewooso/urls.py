@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from restrooms.views import RestroomSearchView
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('admin/', admin.site.urls),
+    path('api/restrooms/', RestroomSearchView.as_view(), name='restroom_search'),
 ]

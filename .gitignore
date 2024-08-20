@@ -78,7 +78,7 @@ dist/
 
 # Gatsby files
 .cache/
-public/
+
 
 # Comment the public/ line if your project is a Gatsby project rather than Next.js
 # public/
@@ -94,7 +94,7 @@ public/
 
 # Static website build directories
 out/
-public/
+
 
 # Optional npm cache directory
 .npm
