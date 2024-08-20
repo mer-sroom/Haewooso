@@ -16,7 +16,8 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/restroom/:id" element={<RestroomDetail />} />
       </Routes>
-    </Router>  
+    </Router>
+  );
 }
- 
-    
+
+export default App;
