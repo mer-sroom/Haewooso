@@ -1,33 +1,64 @@
-from django.shortcuts import render
-
-import requests
 from django.http import JsonResponse
 from django.views import View
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
+import requests
 
-@method_decorator(csrf_exempt, name='dispatch')
 class RestroomSearchView(View):
     def get(self, request):
-        query = request.GET.get('query', '공중화장실')
-        latitude = request.GET.get('lat', '37.5665')
-        longitude = request.GET.get('lng', '126.9780')
-        radius = request.GET.get('radius', '1000')
+        # 네이버 검색 API 클라이언트 ID와 시크릿
+        client_id = "U4Hj0HCQnTdb0xPDUAmP"
+        client_secret = "TRhYJYrwEK"
 
-        url = 'https://naveropenapi.apigw.ntruss.com/map-place/v1/search'
-        headers = {
-            'X-NCP-APIGW-API-KEY-ID': '2nbo1rxdpp',
-            'X-NCP-APIGW-API-KEY': '428NvC7Tw4WL8ABOVByjD9SUQ8ArXzYWqOnwAvZd',
-        }
+        # 요청할 URL과 파라미터
+        url = "https://openapi.naver.com/v1/search/local.json"
         params = {
-            'query': query,
-            'coordinate': f'{longitude},{latitude}',
-            'radius': radius,
+            "query": "공중화장실",  # 검색어
+            "display": 5,  # 표시할 검색 결과의 수
+            "start": 1,  # 검색 시작 위치
+            "sort": "random"  # 정렬 방식
         }
 
-        response = requests.get(url, headers=headers, params=params)
+        # 헤더 설정
+        headers = {
+            "X-Naver-Client-Id": client_id,
+            "X-Naver-Client-Secret": client_secret,
+        }
 
+        # 네이버 API에 GET 요청 보내기
+        response = requests.get(url, headers=headers, params=params)
+        
+        # API 응답 확인
+        print("API Response:", response.json())
+
+        # 응답 결과 반환
         if response.status_code == 200:
             return JsonResponse(response.json())
         else:
-            return JsonResponse({'error': 'Failed to fetch data from Naver API'}, status=response.status_code)
+            return JsonResponse({"error": "Failed to fetch data from Naver API"}, status=response.status_code)
+
+
+class GeocodeView(View):
+    def get(self, request):
+        address = request.GET.get('address')
+
+        if not address:
+            return JsonResponse({"error": "Address parameter is required"}, status=400)
+
+        # 여기서 제공된 API 키와 시크릿 키를 사용
+        client_id = "2nbo1rxdpp"
+        client_secret = "428NvC7Tw4WL8ABOVByjD9SUQ8ArXzYWqOnwAvZd"
+
+        url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
+        params = {
+            "query": address,
+        }
+        headers = {
+            "X-NCP-APIGW-API-KEY-ID": client_id,
+            "X-NCP-APIGW-API-KEY": client_secret,
+        }
+
+        response = requests.get(url, headers=headers, params=params)
+        
+        if response.status_code == 200:
+            return JsonResponse(response.json())
+        else:
+            return JsonResponse({"error": "Failed to fetch data from Naver API"}, status=response.status_code)
