@@ -14,7 +14,7 @@ class RestroomSearchView(View):
             "query": "공중화장실",  # 검색어
             "display": 5,  # 표시할 검색 결과의 수
             "start": 1,  # 검색 시작 위치
-            "sort": "random"  # 정렬 방식
+            "coordinate": "126.9779692,37.566535", 
         }
 
         # 헤더 설정
