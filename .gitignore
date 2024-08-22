@@ -124,3 +124,6 @@ out/
 
 # Optional stylelint cache
 .stylelintcache
+
+
+load_restrooms.py
