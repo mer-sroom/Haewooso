@@ -1,0 +1,26 @@
+/* 네비게이션 바 스타일 */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background-color: #ffffff;
+  width: 100%; /* 전체 너비를 차지하도록 설정 */
+  box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+/* 네비게이션 바 제목 스타일 */
+.navbar-title {
+  font-size: 20px;
+  margin: 0;
+  padding: 0 20px;
+}
+
+/* 햄버거 메뉴 아이콘 */
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0 20px;
+  color: #333; /* 아이콘 색상 */
+}

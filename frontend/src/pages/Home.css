@@ -1,0 +1,43 @@
+/* 홈 컨테이너 */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 자식 요소를 수평 가운데 정렬 */
+  height: 100vh;
+  max-width: 428px; /* 모바일 가로 비율에 맞춤 */
+  margin: 0 auto;
+  background-color: #f5f5f5; /* 배경색 설정 */
+  position: relative; /* 자식 요소의 absolute 위치를 위한 relative 설정 */
+  overflow: hidden;
+}
+
+/* 검색창 스타일 */
+.search-bar {
+  width: 89%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  outline: none;
+  font-size: 16px;
+  box-sizing: border-box; /* 전체 너비를 계산할 때 패딩을 포함 */
+  position: absolute; /* 검색창을 지도 위에 겹치도록 설정 */
+  top: 66px; /* 검색창의 상단 위치 설정 */
+  box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* 검색창이 지도 위에 표시되도록 z-index 설정 */
+}
+
+/* 지도 컨테이너 */
+.map-container {
+  flex: 1;
+  position: relative;
+  width: 100%; /* 지도 컨테이너가 전체 너비를 차지하도록 설정 */
+  height: 100%; /* 지도 컨테이너가 부모의 높이를 차지하도록 설정 */
+}
+
+/* 반응형 설정 */
+@media (max-width: 428px) {
+  .container {
+    width: 100%;
+    padding: 0 10px;
+  }
+}

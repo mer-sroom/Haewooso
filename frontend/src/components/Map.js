@@ -51,7 +51,7 @@ function Map() {
   return (
     <div>
       <div>
-        <h3>검색 결과:</h3>
+        {/* <h3>검색 결과:</h3>
         <ul>
           {restrooms.map((restroom, index) => (
             <li key={index}>
@@ -62,14 +62,14 @@ function Map() {
               전화번호: {restroom.telephone || "정보 없음"}
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
       <div
         id="map"
         style={{
           width: "100%",
-          height: "400px",
-          marginTop: "20px",
+          height: "100vh",
+          marginTop: "0px",
         }}
       ></div>
     </div>
