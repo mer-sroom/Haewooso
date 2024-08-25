@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function Map() {
+function Map({ userLocation }) {
   const [restrooms, setRestrooms] = useState([]);
+  const [map, setMap] = useState(null); // 지도를 상태로 관리
 
   useEffect(() => {
     const fetchRestrooms = async () => {
@@ -19,60 +20,70 @@ function Map() {
           }
         );
 
-        setRestrooms(response.data.items || []); // 응답 데이터에서 items를 설정
+        setRestrooms(response.data.items || []);
       } catch (error) {
         console.error("Error fetching restroom data:", error);
       }
     };
 
     fetchRestrooms();
-  }, []); // 처음 마운트될 때 한 번만 실행
+  }, []);
 
   useEffect(() => {
-    if (restrooms.length > 0) {
-      const map = new window.naver.maps.Map("map", {
+    const initMap = () => {
+      const initialMap = new window.naver.maps.Map("map", {
         center: new window.naver.maps.LatLng(37.566535, 126.9779692),
         zoom: 15,
       });
+      setMap(initialMap);
+    };
 
+    initMap();
+  }, []);
+
+  useEffect(() => {
+    if (map && restrooms.length > 0) {
       restrooms.forEach(restroom => {
         const latitude = restroom.mapy / 1e7; // 좌표를 실제 위도/경도로 변환
         const longitude = restroom.mapx / 1e7;
 
         new window.naver.maps.Marker({
           position: new window.naver.maps.LatLng(latitude, longitude),
-          map,
+          map: map,
           title: restroom.title,
         });
       });
     }
-  }, [restrooms]); // restrooms가 업데이트된 후에만 실행
+  }, [map, restrooms]);
+
+  useEffect(() => {
+    if (map && userLocation) {
+      // 사용자의 위치에 파란색 점 표시
+      new window.naver.maps.Circle({
+        map: map,
+        center: userLocation,
+        radius: 20, // 원의 반지름 (미터 단위)
+        fillColor: "blue",
+        fillOpacity: 0.8,
+        strokeColor: "#000", // 테두리 색상
+        strokeWeight: 2, // 테두리 두께
+      });
+
+      // 지도를 사용자 위치로 이동
+      map.setCenter(userLocation);
+      map.setZoom(15); // 사용자 위치로 이동 시 적절한 줌 레벨 설정
+    }
+  }, [map, userLocation]);
 
   return (
-    <div>
-      <div>
-        {/* <h3>검색 결과:</h3>
-        <ul>
-          {restrooms.map((restroom, index) => (
-            <li key={index}>
-              <strong>{restroom.title.replace(/<\/?b>/g, "")}</strong>
-              <br />
-              주소: {restroom.roadAddress || restroom.address}
-              <br />
-              전화번호: {restroom.telephone || "정보 없음"}
-            </li>
-          ))}
-        </ul> */}
-      </div>
-      <div
-        id="map"
-        style={{
-          width: "100%",
-          height: "calc(100vh - 38px)",
-          marginTop: "0px",
-        }}
-      ></div>
-    </div>
+    <div
+      id="map"
+      style={{
+        width: "100%",
+        height: "calc(100vh - 37px)",
+        marginTop: "0px",
+      }}
+    ></div>
   );
 }
 
