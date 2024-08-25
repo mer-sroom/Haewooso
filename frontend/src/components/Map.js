@@ -68,7 +68,7 @@ function Map() {
         id="map"
         style={{
           width: "100%",
-          height: "100vh",
+          height: "calc(100vh - 38px)",
           marginTop: "0px",
         }}
       ></div>

@@ -14,6 +14,7 @@ function Home() {
       />
       <div className="map-container">
         <Map />
+        <button className="gps-button"></button> {/* GPS 버튼 추가 */}
       </div>
     </div>
   );
