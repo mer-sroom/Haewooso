@@ -1,0 +1,78 @@
+.login-wrap {
+  height: 100vh;
+  max-width: 428px; /* 모바일 가로 비율에 맞춤 */
+  margin: 0 auto;
+  position: relative; /* 자식 요소의 absolute 위치를 위한 relative 설정 */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+/* 전체 감싼 영역 */
+.login-container {
+  width: 89%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 서브타이틀 (...) */
+.login-title-sub {
+  text-align: center;
+  font-size: 66px;
+  font-weight: lighter;
+  letter-spacing: 5px;
+  color: #01cdce;
+}
+
+/* 아이콘(로고) */
+.login-logo {
+  width: 60%;
+  padding-top: 31px;
+}
+
+/* 아이디, 비밀번호 입력 */
+.login-form {
+  padding-top: 64px;
+  width: 100%;
+}
+
+.login-form-container input {
+  width: 100%;
+  height: 65px;
+  border: 0;
+  border-bottom: 1px solid black;
+  padding: 0;
+  padding-left: 10px;
+}
+
+.login-form-container input:last-child {
+  margin-top: 8px;
+}
+
+.login-form-container p {
+  font-size: 14px;
+  text-align: right;
+}
+
+.login-form-container p a {
+  text-decoration: none;
+  color: #868686;
+}
+
+/* 로그인 버튼 */
+.login-btn {
+  padding-top: 63px;
+}
+
+.login-btn button {
+  padding: 27px 71px;
+  border-radius: 50px;
+  background-color: #01cdce;
+  border: 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+}
