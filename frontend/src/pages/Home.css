@@ -5,7 +5,7 @@
   align-items: center; /* 자식 요소를 수평 가운데 정렬 */
   height: 100vh;
   max-width: 428px; /* 모바일 가로 비율에 맞춤 */
-  margin: 0 auto;
+  margin: 0px auto;
   background-color: #f5f5f5; /* 배경색 설정 */
   position: relative; /* 자식 요소의 absolute 위치를 위한 relative 설정 */
   overflow: hidden;
@@ -37,16 +37,19 @@
 /* GPS 버튼 스타일 */
 .gps-button {
   position: absolute;
-  bottom: 50px; /* 아래에서 50px 위로 */
-  right: 20px; /* 오른쪽에서 20px 왼쪽으로 */
-  width: 50px; /* 버튼의 너비 */
-  height: 50px; /* 버튼의 높이 */
-  background-color: #ffffff; /* 흰색 배경 */
-  border-radius: 50%; /* 동그란 모양으로 만들기 */
-  border: 2px solid #ddd; /* 테두리 설정 */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
-  z-index: 20; /* 지도 위에 표시되도록 z-index 설정 */
-  cursor: pointer; /* 커서를 포인터로 변경 */
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 20;
+  cursor: pointer;
+  background-image: url("../assets/GPS.svg"); /* SVG 파일을 배경 이미지로 설정 */
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* 반응형 설정 */
