@@ -1,0 +1,31 @@
+.submit {
+    background-color: #fff;
+      border: 3px solid #01CDCE;
+      border-radius: 25px;
+      color: #01CDCE;
+      padding: 5px 10px;
+      cursor: pointer;
+      align-self: flex-end;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.2s, color 0.2s;
+      display: flex;
+      margin-left: 66%;
+    }
+    
+    .submit:hover {
+        background-color: #01CDCE;
+        color: #fff;
+      }
+    
+    .review-input {
+      background-color: #f5f5f5;
+      border-style: none;
+    }
+    
+    textarea {
+      padding: 15px;
+      margin-left: -15px;
+      margin-top: 25px;
+      margin-bottom: 20px;
+    }
