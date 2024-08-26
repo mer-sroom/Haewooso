@@ -1,0 +1,97 @@
+.signup-wrap {
+  height: 100vh;
+  max-width: 428px; /* 모바일 가로 비율에 맞춤 */
+  margin: 0 auto;
+  position: relative; /* 자식 요소의 absolute 위치를 위한 relative 설정 */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.signup-container {
+  width: 89%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 회원가입 제목 */
+.signup-title {
+  width: 100%;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: left;
+}
+
+/* 회원가입 압력창 */
+.signup-form {
+  padding-top: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-form input {
+  height: 65px;
+  border: 0;
+  border-bottom: 1px solid black;
+  padding: 0;
+  padding-left: 10px;
+  margin-bottom: 6px;
+}
+
+.signup-form-line {
+  padding-top: 50px;
+  width: 100%;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+/* 이용약관 동의서 */
+.signup-detail {
+  padding-top: 25px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-detail-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 이용약관 동의서 (체크박스 & 이용약관 제목)*/
+.signup-detail-content-box {
+  display: flex;
+}
+
+.signup-detail-title {
+  padding-left: 10px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+/* 이용약관 동의서 (상세보기)*/
+.signup-detail-detail a {
+  font-size: 11px;
+  color: #aeaeae;
+  text-decoration: none;
+}
+
+/* 가입하기 버튼 */
+.signup-btn {
+  padding-top: 98px;
+}
+
+.signup-btn button {
+  padding: 27px 71px;
+  border-radius: 50px;
+  background-color: #01cdce;
+  border: 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+}
