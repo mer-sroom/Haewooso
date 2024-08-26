@@ -26,6 +26,55 @@
   z-index: 10; /* 검색창이 지도 위에 표시되도록 z-index 설정 */
 }
 
+/* 드롭다운 메뉴 기본 스타일 */
+.search-results {
+  position: absolute;
+  top: 120px; /* 검색창 바로 아래에 위치하도록 설정 */
+  left: 5.5%; /* 검색창과 동일한 좌우 여백 설정 */
+  width: 84%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* 지도 위에 드롭다운이 뜨도록 z-index 설정 */
+  padding: 10px;
+  max-height: 300px; /* 최대 높이 설정 (필요에 따라 조정 가능) */
+  overflow-y: auto; /* 검색 결과가 많을 경우 스크롤 가능하도록 설정 */
+  display: none; /* 기본적으로 숨김 */
+  opacity: 0; /* 기본적으로 투명 */
+  transform: translateY(-10px); /* 위로 약간 이동 */
+  transition: all 0.3s ease-out; /* 애니메이션 효과 설정 */
+}
+
+/* 드롭다운 아이템 스타일 */
+.search-result-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer; /* 마우스 커서를 포인터로 설정 */
+}
+
+.search-result-item:last-child {
+  border-bottom: none; /* 마지막 항목의 밑줄 없애기 */
+}
+
+.search-result-item div:first-child {
+  font-size: 14px;
+}
+
+.search-result-item div:last-child {
+  font-size: 12px;
+  color: #888;
+}
+
+/* 드롭다운이 활성화된 상태 스타일 */
+.search-results.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0); /* 원래 위치로 이동 */
+}
+
 /* 지도 컨테이너 */
 .map-container {
   flex: 1;

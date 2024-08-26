@@ -95,7 +95,58 @@ class NearbyRestroomsView(View):
                     "road_address": restroom.road_address,
                     "latitude": restroom.latitude,
                     "longitude": restroom.longitude,
+                    "distance": distance  # 거리 정보를 추가
                 })
+
+        # 거리 기준으로 정렬하고 최대 10개까지 반환
+        nearby_restrooms.sort(key=lambda x: x["distance"])
+        nearby_restrooms = nearby_restrooms[:10]
 
         return JsonResponse({"items": nearby_restrooms})
 
+class SearchRestroomsView(View):
+    def get(self, request):
+        query = request.GET.get('query', '').strip()
+        lat = float(request.GET.get('lat'))
+        lng = float(request.GET.get('lng'))
+
+        if not query:
+            return JsonResponse({"error": "Query parameter is required"}, status=400)
+
+        def haversine(lat1, lon1, lat2, lon2):
+            R = 6371000  # 지구 반지름 (미터 단위)
+            phi1 = math.radians(lat1)
+            phi2 = math.radians(lat2)
+            delta_phi = math.radians(lat2 - lat1)
+            delta_lambda = math.radians(lon2 - lon1)
+
+            a = math.sin(delta_phi / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(delta_lambda / 2) ** 2
+            c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+            return R * c  # 두 좌표 간의 거리 (미터 단위)
+
+        # 검색어가 포함된 공중화장실을 필터링 (이름 또는 주소에 포함된 경우)
+        restrooms = Restroom.objects.filter(
+            name__icontains=query
+        ) | Restroom.objects.filter(
+            road_address__icontains=query
+        ) | Restroom.objects.filter(
+            jibun_address__icontains=query
+        )
+
+        search_results = []
+
+        for restroom in restrooms:
+            distance = haversine(lat, lng, restroom.latitude, restroom.longitude)
+            search_results.append({
+                "name": restroom.name,
+                "latitude": restroom.latitude,
+                "longitude": restroom.longitude,
+                "distance": distance  # 거리를 결과에 포함
+            })
+
+        # 거리 순으로 정렬하고 상위 5개만 반환
+        search_results.sort(key=lambda x: x['distance'])
+        search_results = search_results[:5]
+
+        return JsonResponse({"items": search_results})
