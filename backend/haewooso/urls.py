@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from restrooms.views import RestroomSearchView, GeocodeView
+from restrooms.views import RestroomSearchView, GeocodeView, NearbyRestroomsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/restrooms/', RestroomSearchView.as_view(), name='restroom_search'),
     path('api/geocode/', GeocodeView.as_view(), name='geocode'),
+    path('api/nearby-restrooms/', NearbyRestroomsView.as_view(), name='nearby_restrooms'),
 ]

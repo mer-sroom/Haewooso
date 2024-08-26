@@ -3,31 +3,27 @@ import axios from "axios";
 
 function Map({ userLocation }) {
   const [restrooms, setRestrooms] = useState([]);
-  const [map, setMap] = useState(null); // 지도를 상태로 관리
+  const [map, setMap] = useState(null);
 
-  useEffect(() => {
-    const fetchRestrooms = async () => {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/restrooms/",
-          {
-            params: {
-              query: "공중화장실",
-              lat: 37.566535,
-              lng: 126.9779692,
-              radius: 1000,
-            },
-          }
-        );
+  // 사용자의 위치를 기반으로 공중화장실 데이터를 가져오는 함수
+  const fetchRestrooms = async (lat, lng) => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/nearby-restrooms/",
+        {
+          params: {
+            lat: lat,
+            lng: lng,
+            radius: 1000, // 1km 반경 내 공중화장실을 검색
+          },
+        }
+      );
 
-        setRestrooms(response.data.items || []);
-      } catch (error) {
-        console.error("Error fetching restroom data:", error);
-      }
-    };
-
-    fetchRestrooms();
-  }, []);
+      setRestrooms(response.data.items || []);
+    } catch (error) {
+      console.error("Error fetching restroom data:", error);
+    }
+  };
 
   useEffect(() => {
     const initMap = () => {
@@ -41,16 +37,21 @@ function Map({ userLocation }) {
     initMap();
   }, []);
 
+  // 초기 공중화장실 데이터를 가져오기
+  useEffect(() => {
+    fetchRestrooms(37.566535, 126.9779692);
+  }, []);
+
   useEffect(() => {
     if (map && restrooms.length > 0) {
       restrooms.forEach(restroom => {
-        const latitude = restroom.mapy / 1e7; // 좌표를 실제 위도/경도로 변환
-        const longitude = restroom.mapx / 1e7;
-
         new window.naver.maps.Marker({
-          position: new window.naver.maps.LatLng(latitude, longitude),
+          position: new window.naver.maps.LatLng(
+            restroom.latitude,
+            restroom.longitude
+          ),
           map: map,
-          title: restroom.title,
+          title: restroom.name,
         });
       });
     }
@@ -58,20 +59,23 @@ function Map({ userLocation }) {
 
   useEffect(() => {
     if (map && userLocation) {
-      // 사용자의 위치에 파란색 점 표시
+      // 사용자 위치에 파란색 점 표시
       new window.naver.maps.Circle({
         map: map,
         center: userLocation,
         radius: 20, // 원의 반지름 (미터 단위)
         fillColor: "blue",
         fillOpacity: 0.8,
-        strokeColor: "#000", // 테두리 색상
-        strokeWeight: 2, // 테두리 두께
+        strokeColor: "#000",
+        strokeWeight: 2,
       });
 
       // 지도를 사용자 위치로 이동
       map.setCenter(userLocation);
-      map.setZoom(15); // 사용자 위치로 이동 시 적절한 줌 레벨 설정
+      map.setZoom(15);
+
+      // 사용자 위치를 기반으로 공중화장실 데이터 다시 가져오기
+      fetchRestrooms(userLocation.lat(), userLocation.lng());
     }
   }, [map, userLocation]);
 
