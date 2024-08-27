@@ -1,0 +1,87 @@
+/* Overlay 스타일 */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* 전체 화면을 덮도록 설정 */
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 배경을 어둡게 */
+  z-index: 5; /* 사이드바 뒤에 있도록 설정 */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease, visibility 1s ease; /* 2초 동안 서서히 나타남 */
+}
+
+.overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Sidebar 스타일 */
+#sidebar {
+  z-index: 120;
+  padding: 12px;
+  border-radius: 15px 0 0 15px;
+  background-color: #ffffff;
+  height: 100%;
+  width: 40%;
+  right: -55%;
+  top: 0;
+  position: absolute;
+  transition: right 0.5s ease; /* 위치 변화 시 부드럽게 이동 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#sidebar.open {
+  right: 0;
+}
+
+/* Sidebar 내부 리스트 스타일 초기화 */
+.sidebar-ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+}
+
+/* 다른 스타일들 */
+.hello-text {
+  text-align: center;
+  white-space: pre-line;
+  line-height: 1.5;
+  margin-top: 60px;
+}
+
+.username {
+  color: #01cdce;
+  font-weight: 600;
+}
+
+.logout {
+  align-self: flex-start;
+  margin-left: 15px;
+  font-size: 11px;
+  margin-bottom: 20px;
+}
+
+.menu-item {
+  text-align: center;
+  margin-top: 10px;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* 로그인 아이콘과 텍스트 */
+.login-icon {
+  display: block;
+  margin: 20px auto;
+}
+
+.login-text {
+  text-align: center;
+  font-size: 16px;
+  color: #000;
+}
