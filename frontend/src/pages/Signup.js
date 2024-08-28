@@ -7,11 +7,12 @@ const Signup = () => {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [error, setError] = useState(""); // error 상태 추가
   const navigate = useNavigate(); // 페이지 이동을 위한 훅
 
   const handleSignup = async () => {
     if (password !== passwordConfirm) {
-      alert("비밀번호가 일치하지 않습니다.");
+      setError("비밀번호가 일치하지 않습니다."); // 오류 상태 설정
       return;
     }
 
@@ -26,11 +27,11 @@ const Signup = () => {
         alert("회원가입 성공");
         navigate("/login");
       } else {
-        alert("회원가입 실패");
+        setError("회원가입 실패");
       }
     } catch (error) {
       console.error("회원가입 중 오류 발생:", error);
-      alert("회원가입 실패");
+      setError("회원가입 실패"); // 오류 상태 설정
     }
   };
 
@@ -59,7 +60,8 @@ const Signup = () => {
           />
           <div className="signup-form-line"></div>
         </div>
-        {error && <div className="signup-error">{error}</div>}
+        {error && <div className="signup-error">{error}</div>}{" "}
+        {/* 오류 메시지 표시 */}
         <div className="signup-detail">
           <div className="signup-detail-content">
             <div className="signup-detail-content-box">
