@@ -3,6 +3,14 @@ from django.views import View
 import requests
 from restrooms.models import Restroom
 import math
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from .serializers import UserSerializer
+from rest_framework.authtoken.models import Token  # Token 모델 임포트
+
 
 class RestroomSearchView(View):
     def get(self, request):
@@ -150,3 +158,38 @@ class SearchRestroomsView(View):
         search_results = search_results[:5]
 
         return JsonResponse({"items": search_results})
+
+class SignupView(APIView):
+    def post(self, request):
+        data = request.data
+        print("Received data:", data)  # 로그로 받은 데이터 출력
+        username = data.get('username')  # 'nickname' 대신 'username'으로 수정
+        password = data.get('password')
+
+        if not username or not password:
+            print("Missing fields:", username, password)  # 누락된 필드 출력
+            return Response({"error": "닉네임과 비밀번호는 필수입니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if User.objects.filter(username=username).exists():
+            print("Username already exists:", username)  # 이미 존재하는 닉네임 출력
+            return Response({"error": "이미 존재하는 닉네임입니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = User.objects.create_user(username=username, password=password)
+        user.save()
+        print("User created:", user)  # 성공적으로 생성된 사용자 출력
+        return Response({"message": "회원가입이 완료되었습니다."}, status=status.HTTP_201_CREATED)
+
+
+
+class LoginView(APIView):
+    def post(self, request):
+        username = request.data.get('username')  # 클라이언트로부터 받은 username
+        password = request.data.get('password')  # 클라이언트로부터 받은 password
+
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            token, created = Token.objects.get_or_create(user=user)  # 토큰 생성 또는 가져오기
+            login(request, user)
+            return Response({"token": token.key, "message": "로그인에 성공하였습니다."}, status=status.HTTP_200_OK)
+        return Response({"error": "닉네임 또는 비밀번호가 잘못되었습니다."}, status=status.HTTP_401_UNAUTHORIZED)
