@@ -1,52 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom"; // 페이지 이동을 위해 추가
 import "./Signup.css";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate 훅을 불러옵니다
 
 const Signup = () => {
   const [nickname, setNickname] = useState("");
-  const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [error, setError] = useState(""); // error 상태 추가
+  const navigate = useNavigate(); // 페이지 이동을 위한 훅
 
-  const validateNickname = (nickname) => {
-    return nickname.length <= 8;
-  };
-
-  const validateId = (id) => {
-    return id.length <= 12;
-  };
-
-  //  특수문자 포함 8글자
-  const validatePassword = (password) => {
-    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/g;
-    return password.length >= 8 && specialCharRegex.test(password);
-  };
-
-  const handleSignup = () => {
-    if (!validateNickname(nickname)) {
-      setError("닉네임은 8글자 이하로 입력해주세요.");
+  const handleSignup = async () => {
+    if (password !== passwordConfirm) {
+      setError("비밀번호가 일치하지 않습니다."); // 오류 상태 설정
       return;
     }
 
-    if (!validateId(id)) {
-      setError("아이디는 12글자 이하로 입력해주세요.");
-      return;
-    }
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/signup/", {
+        username: nickname, // 닉네임을 username으로 전달
+        password,
+      });
 
-    if (!validatePassword(password)) {
-      setError("비밀번호는 8글자 이상이며, 특수문자를 포함해야 합니다.");
-      return;
+      if (response.status === 201) {
+        // 회원가입 성공 시 로그인 페이지로 이동
+        alert("회원가입 성공");
+        navigate("/login");
+      } else {
+        setError("회원가입 실패");
+      }
+    } catch (error) {
+      console.error("회원가입 중 오류 발생:", error);
+      setError("회원가입 실패"); // 오류 상태 설정
     }
-
-    if (password !== confirmPassword) {
-      setError("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-      return;
-    }
-
-    setError("");
-    alert("로그인이 성공했습니다!");
   };
 
   return (
@@ -58,43 +44,37 @@ const Signup = () => {
             type="text"
             placeholder="닉네임 입력"
             value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-          ></input>
-          <input
-            type="text"
-            placeholder="아이디 입력"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-          ></input>
+            onChange={e => setNickname(e.target.value)}
+          />
           <input
             type="password"
             placeholder="비밀번호"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          ></input>
+            onChange={e => setPassword(e.target.value)}
+          />
           <input
             type="password"
             placeholder="비밀번호 확인"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          ></input>
+            value={passwordConfirm}
+            onChange={e => setPasswordConfirm(e.target.value)}
+          />
           <div className="signup-form-line"></div>
         </div>
-        {error && <div className="signup-error">{error}</div>}
+        {error && <div className="signup-error">{error}</div>}{" "}
+        {/* 오류 메시지 표시 */}
         <div className="signup-detail">
           <div className="signup-detail-content">
             <div className="signup-detail-content-box">
-              <input type="checkbox"></input>
+              <input type="checkbox" />
               <div className="signup-detail-title">개인정보 처리 방침 동의</div>
             </div>
-
             <div className="signup-detail-detail">
               <a href="#">상세보기</a>
             </div>
           </div>
           <div className="signup-detail-content">
             <div className="signup-detail-content-box">
-              <input type="checkbox"></input>
+              <input type="checkbox" />
               <div className="signup-detail-title">서비스 이용약관 동의</div>
             </div>
             <div className="signup-detail-detail">
