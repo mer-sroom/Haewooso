@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // 페이지 이동을 위해 추가
 import "./Signup.css";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate 훅을 불러옵니다
 
 const Signup = () => {
   const [nickname, setNickname] = useState("");
