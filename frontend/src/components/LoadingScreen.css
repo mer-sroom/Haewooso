@@ -1,0 +1,69 @@
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: white;
+}
+
+.animated-content {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.speed-images {
+  position: relative;
+  margin-right: 70px; /* 화장지와 약간의 간격을 둡니다 */
+  margin-bottom: 40px;
+}
+
+.speed-image {
+  width: 50px;
+  position: absolute;
+  opacity: 0;
+  animation: alternateVisibility 1s infinite;
+}
+
+.speed1 {
+  animation-delay: 0s;
+}
+
+.speed2 {
+  animation-delay: 0.5s; /* speed1과 0.5초 차이로 나타남 */
+}
+
+@keyframes alternateVisibility {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animated-tissue {
+  animation: moveUpDown 1s infinite alternate ease-in-out; /* 부드럽고 자연스러운 움직임 */
+}
+
+.main-image {
+  width: 150px;
+}
+
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(-10px); /* 위로 10px 이동 */
+  }
+  50% {
+    transform: translateY(10px); /* 아래로 10px 이동 */
+  }
+  100% {
+    transform: translateY(-10px); /* 다시 위로 10px 이동 */
+  }
+}
+
+.word-image {
+  width: 120px;
+}
