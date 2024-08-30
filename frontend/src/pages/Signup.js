@@ -8,9 +8,16 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState(""); // error 상태 추가
+  const [privatePolicy, setPrivatePolicy] = useState(false);
+  const [servicePolicy, setServicePolicy] = useState(false);
   const navigate = useNavigate(); // 페이지 이동을 위한 훅
 
   const handleSignup = async () => {
+    if (!privatePolicy || !servicePolicy) {
+      setError("모든 약관에 동의해주시기 바랍니다."); // 모든 이용약관에 체크 필요
+      return;
+    }
+
     if (password !== passwordConfirm) {
       setError("비밀번호가 일치하지 않습니다."); // 오류 상태 설정
       return;
@@ -44,19 +51,19 @@ const Signup = () => {
             type="text"
             placeholder="닉네임 입력"
             value={nickname}
-            onChange={e => setNickname(e.target.value)}
+            onChange={(e) => setNickname(e.target.value)}
           />
           <input
             type="password"
-            placeholder="비밀번호"
+            placeholder="비밀번호 입력"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <input
             type="password"
             placeholder="비밀번호 확인"
             value={passwordConfirm}
-            onChange={e => setPasswordConfirm(e.target.value)}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
           />
           <div className="signup-form-line"></div>
         </div>
@@ -65,7 +72,11 @@ const Signup = () => {
         <div className="signup-detail">
           <div className="signup-detail-content">
             <div className="signup-detail-content-box">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={privatePolicy}
+                onChange={(e) => setPrivatePolicy(e.target.checked)}
+              />
               <div className="signup-detail-title">개인정보 처리 방침 동의</div>
             </div>
             <div className="signup-detail-detail">
@@ -74,7 +85,11 @@ const Signup = () => {
           </div>
           <div className="signup-detail-content">
             <div className="signup-detail-content-box">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={servicePolicy}
+                onChange={(e) => setServicePolicy(e.target.checked)}
+              />
               <div className="signup-detail-title">서비스 이용약관 동의</div>
             </div>
             <div className="signup-detail-detail">
