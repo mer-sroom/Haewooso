@@ -74,13 +74,17 @@ function Home({ isLoggedIn, setIsLoggedIn }) {
         onChange={handleSearchChange}
       />
       <div className={`search-results ${showDropdown ? "active" : ""}`}>
-        {searchResults.map((result, index) => (
-          <div key={index} className="search-result-item">
-            <div>{result.name}</div>
-            <div>{result.road_address}</div>
-            {result.distance && <div>{result.distance.toFixed(2)} m</div>}
-          </div>
-        ))}
+        {searchResults.length > 0
+          ? searchResults.map((result, index) => (
+              <div key={index} className="search-result-item">
+                <div>{result.name}</div>
+                <div>{result.road_address}</div>
+                {result.distance && <div>{result.distance.toFixed(2)} m</div>}
+              </div>
+            ))
+          : showDropdown && (
+              <div className="no-results">검색 결과가 없습니다</div>
+            )}
       </div>
       <div className="map-container">
         <Map userLocation={userLocation} restrooms={restrooms} />

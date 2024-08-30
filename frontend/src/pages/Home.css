@@ -9,6 +9,7 @@
   background-color: #f5f5f5; /* 배경색 설정 */
   position: relative; /* 자식 요소의 absolute 위치를 위한 relative 설정 */
   overflow: hidden;
+  transition: transform 0.2s ease-in-out; /* 부드러운 확대 효과 */
 }
 
 /* 검색창 스타일 */
@@ -24,6 +25,7 @@
   top: 66px; /* 검색창의 상단 위치 설정 */
   box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.2);
   z-index: 10; /* 검색창이 지도 위에 표시되도록 z-index 설정 */
+  transition: transform 0.2s ease-in-out; /* 부드러운 확대 효과 */
 }
 
 /* 드롭다운 메뉴 기본 스타일 */
@@ -42,7 +44,13 @@
   display: none; /* 기본적으로 숨김 */
   opacity: 0; /* 기본적으로 투명 */
   transform: translateY(-10px); /* 위로 약간 이동 */
-  transition: all 0.3s ease-out; /* 애니메이션 효과 설정 */
+  transition: all 0.3s ease-out, transform 0.2s ease-in-out; /* 애니메이션 효과 설정 */
+}
+
+.search-results.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0); /* 원래 위치로 이동 */
 }
 
 /* 드롭다운 아이템 스타일 */
@@ -53,6 +61,11 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer; /* 마우스 커서를 포인터로 설정 */
+  transition: transform 0.2s ease-in-out; /* 부드러운 확대 효과 */
+}
+
+.search-result-item:hover {
+  transform: scale(1.02); /* 살짝 확대 */
 }
 
 .search-result-item:last-child {
@@ -68,19 +81,13 @@
   color: #888;
 }
 
-/* 드롭다운이 활성화된 상태 스타일 */
-.search-results.active {
-  display: block;
-  opacity: 1;
-  transform: translateY(0); /* 원래 위치로 이동 */
-}
-
 /* 지도 컨테이너 */
 .map-container {
   flex: 1;
   position: relative;
   width: 100%; /* 지도 컨테이너가 전체 너비를 차지하도록 설정 */
   height: 100%; /* 지도 컨테이너가 부모의 높이를 차지하도록 설정 */
+  transition: transform 0.2s ease-in-out; /* 부드러운 확대 효과 */
 }
 
 /* GPS 버튼 스타일 */
@@ -99,6 +106,11 @@
   background-image: url("../assets/GPS.svg"); /* SVG 파일을 배경 이미지로 설정 */
   background-repeat: no-repeat;
   background-position: center;
+  transition: transform 0.2s ease-in-out; /* 부드러운 확대 효과 */
+}
+
+.gps-button:hover {
+  transform: scale(1.1); /* 조금 더 크게 확대 */
 }
 
 /* 반응형 설정 */
