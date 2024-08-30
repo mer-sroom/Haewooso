@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import Detail from "../components/Detail";
 import axios from "axios";
 
 function Map({ userLocation }) {
   const [restrooms, setRestrooms] = useState([]);
   const [map, setMap] = useState(null);
+  const [detail, setDetail] = useState(false);
+  const ref = useRef(null);
 
   // 사용자의 위치를 기반으로 공중화장실 데이터를 가져오는 함수
   const fetchRestrooms = async (lat, lng) => {
@@ -18,7 +21,6 @@ function Map({ userLocation }) {
           },
         }
       );
-
       setRestrooms(response.data.items || []);
     } catch (error) {
       console.error("Error fetching restroom data:", error);
@@ -45,13 +47,17 @@ function Map({ userLocation }) {
   useEffect(() => {
     if (map && restrooms.length > 0) {
       restrooms.forEach(restroom => {
-        new window.naver.maps.Marker({
+        const marker = new window.naver.maps.Marker({
           position: new window.naver.maps.LatLng(
             restroom.latitude,
             restroom.longitude
           ),
           map: map,
           title: restroom.name,
+        });
+
+        window.naver.maps.Event.addListener(marker, 'click', function () {
+          setDetail(<Detail></Detail>);
         });
       });
     }
@@ -79,15 +85,37 @@ function Map({ userLocation }) {
     }
   }, [map, userLocation]);
 
+
+  useEffect((event) => {
+    const detailHandle = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setDetail(null);
+        //외부 영역 클릭이면 detail state를 null로 바꾼다
+      }
+    };
+    document.addEventListener('mousedown', detailHandle);
+      //마우스 클릭하는 이벤트 듣고있기
+    return () => {
+      document.removeEventListener('mousedown', detailHandle);
+      //클릭하는 이벤트 듣고있는 것 삭제
+    };
+  }, []);
+
+
+
   return (
-    <div
-      id="map"
-      style={{
-        width: "100%",
-        height: "calc(100vh - 37px)",
-        marginTop: "0px",
-      }}
-    ></div>
+    <div className="map-container">
+      <div ref={ref}>{detail}</div>
+      <div
+        id="map"
+        style={{
+          width: "100%",
+          height: "calc(100vh - 37px)",
+          marginTop: "0px",
+        }}
+      >
+      </div>
+    </div>
   );
 }
 
