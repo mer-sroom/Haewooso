@@ -25,3 +25,6 @@
 
 - **숨머**  
   GitHub: [StarlightSSM](https://github.com/StarlightSSM/StudyTypeScript)
+
+- **미머**  
+  GitHub: [zii0911](https://github.com/amamj05)
