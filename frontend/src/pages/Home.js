@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Map from "../components/Map";
 import Navbar from "../components/Navbar";
+import exitBtn from "../assets/exitBtn.svg";
 import "./Home.css";
 
 function Home({ isLoggedIn, setIsLoggedIn }) {
@@ -88,7 +89,7 @@ function Home({ isLoggedIn, setIsLoggedIn }) {
           className={`search-bar-clear-btn ${showDropdown ? "activate" : ""}`}
           onClick={handleClearSearchContent}
         >
-          X
+          <img src={exitBtn} alt="exitBtn" />
         </button>
       </div>
       <div className={`search-results ${showDropdown ? "active" : ""}`}>
