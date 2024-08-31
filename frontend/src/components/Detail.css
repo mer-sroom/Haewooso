@@ -1,29 +1,61 @@
-.detail-container{
-    width: 100%;
-    height: 65%;
-    background-color: white;
-    z-index: 1;
-    bottom: -365px;
-    position: absolute;
-    cursor: grab;
-    border-radius: 45px;
-    box-shadow: 0px 5px 15px gray;
+.detail-container {
+  width: 91%;
+  height: 20%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 45px 45px 0 0;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  bottom: 0; /* 화면의 하단에 고정 */
+  left: 0;
+  z-index: 10000;
+  cursor: grab;
+  transition: transform 0.3s ease-in-out;
+  transform: translateY(100%); /* 처음에는 화면 아래에 숨김 */
+}
+
+.detail-container.show {
+  transform: translateY(0); /* 화면에 나타남 */
 }
 
 .detail-container:active {
-    cursor: grabbing;
+  cursor: grabbing;
 }
 
-#top-bar{
-    width: 28px;
-    height: 1.5px;
-    background-color: gray;
-    border-radius: 2px;
-    margin: 27px 0px 0px 46%;
+#top-bar {
+  width: 40px;
+  height: 4px;
+  background-color: gray;
+  border-radius: 2px;
+  margin: 16px auto;
 }
 
 .detail-container h2 {
-    font-weight: 500;
-    margin-left: 35px;
-    margin-top: 24px;
+  font-weight: 500;
+  margin-left: 20px;
+  margin-top: 24px;
+  font-size: 18px;
+}
+
+.simple-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.simple-detail-header .rating {
+  font-size: 16px;
+  color: #ffa500; /* 별점 색상 */
+}
+
+.simple-detail-info p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.simple-detail-info .copy-icon {
+  cursor: pointer;
+  margin-left: 5px;
 }
