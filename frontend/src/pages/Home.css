@@ -16,7 +16,7 @@
 .search-bar-container {
   width: 100%;
   position: absolute; /* 검색창을 지도 위에 겹치도록 설정 */
-  top: 72px; /* 검색창의 상단 위치 설정 */
+  top: 68px; /* 검색창의 상단 위치 설정 */
   left: 6.5%;
   z-index: 10; /* 검색창이 지도 위에 표시되도록 z-index 설정 */
 }
@@ -24,7 +24,7 @@
 /* 검색창 스타일 */
 .search-bar {
   width: 88%;
-  padding: 15px 20px;
+  padding: 15px 24px;
   border: 1px solid #ddd;
   border-radius: 25px;
   box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.2);
@@ -53,11 +53,11 @@
 /* 드롭다운 메뉴 기본 스타일 */
 .search-results {
   position: absolute;
-  top: 128px; /* 검색창 바로 아래에 위치하도록 설정 */
-  left: 7.6%; /* 검색창과 동일한 좌우 여백 설정 */
-  width: 86%;
+  top: 122px; /* 검색창 바로 아래에 위치하도록 설정 */
+  left: 7.8%; /* 검색창과 동일한 좌우 여백 설정 */
+  width: 85%;
   background-color: white;
-  border-radius: 14px;
+  border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 10; /* 지도 위에 드롭다운이 뜨도록 z-index 설정 */
   max-height: 300px; /* 최대 높이 설정 (필요에 따라 조정 가능) */
@@ -73,6 +73,7 @@
   opacity: 1;
   transform: translateY(0); /* 원래 위치로 이동 */
 }
+/*검색 결과 없을 시*/
 .no-results {
   padding: 15px;
   font-size: 14px;
@@ -109,7 +110,9 @@
 .search-result-item div:first-child {
   font-size: 14px;
 }
-
+.search-result-item div:nth-child(2) {
+  display: none;
+}
 .search-result-item div:last-child {
   font-size: 12px;
   color: #888;
