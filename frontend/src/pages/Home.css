@@ -12,33 +12,54 @@
   transition: transform 0.2s ease-in-out; /* 부드러운 확대 효과 */
 }
 
+/*검색창 컨테이너*/
+.search-bar-container {
+  width: 100%;
+  position: absolute; /* 검색창을 지도 위에 겹치도록 설정 */
+  top: 68px; /* 검색창의 상단 위치 설정 */
+  left: 6.5%;
+  z-index: 10; /* 검색창이 지도 위에 표시되도록 z-index 설정 */
+}
+
 /* 검색창 스타일 */
 .search-bar {
-  width: 89%;
-  padding: 15px;
+  width: 88%;
+  padding: 15px 24px;
   border: 1px solid #ddd;
   border-radius: 25px;
+  box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.2);
   outline: none;
   font-size: 14px;
   box-sizing: border-box; /* 전체 너비를 계산할 때 패딩을 포함 */
-  position: absolute; /* 검색창을 지도 위에 겹치도록 설정 */
-  top: 66px; /* 검색창의 상단 위치 설정 */
-  box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.2);
-  z-index: 10; /* 검색창이 지도 위에 표시되도록 z-index 설정 */
   transition: transform 0.2s ease-in-out; /* 부드러운 확대 효과 */
+}
+
+/* 검색창 X 버튼-기본 상태*/
+.search-bar-clear-btn {
+  border: none;
+  position: absolute;
+  top: 16px;
+  right: 64px;
+  background-color: transparent;
+  display: none;
+  cursor: pointer;
+}
+
+/*검색창 X 버튼-텍스트 입력 시*/
+.search-bar-clear-btn.activate {
+  display: block;
 }
 
 /* 드롭다운 메뉴 기본 스타일 */
 .search-results {
   position: absolute;
-  top: 120px; /* 검색창 바로 아래에 위치하도록 설정 */
-  left: 5.5%; /* 검색창과 동일한 좌우 여백 설정 */
-  width: 84%;
+  top: 122px; /* 검색창 바로 아래에 위치하도록 설정 */
+  left: 7.8%; /* 검색창과 동일한 좌우 여백 설정 */
+  width: 85%;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 10; /* 지도 위에 드롭다운이 뜨도록 z-index 설정 */
-  padding: 10px;
   max-height: 300px; /* 최대 높이 설정 (필요에 따라 조정 가능) */
   overflow-y: auto; /* 검색 결과가 많을 경우 스크롤 가능하도록 설정 */
   display: none; /* 기본적으로 숨김 */
@@ -52,30 +73,46 @@
   opacity: 1;
   transform: translateY(0); /* 원래 위치로 이동 */
 }
+/*검색 결과 없을 시*/
+.no-results {
+  padding: 15px;
+  font-size: 14px;
+}
 
 /* 드롭다운 아이템 스타일 */
 .search-result-item {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  padding: 12px 20px;
+  border-bottom: 1px solid #f7f7f7;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer; /* 마우스 커서를 포인터로 설정 */
-  transition: transform 0.2s ease-in-out; /* 부드러운 확대 효과 */
+  transition: 0.2s ease-in-out; /* 부드러운 확대 효과 */
+}
+
+.search-result-item:nth-child(1) {
+  padding-top: 16px;
+}
+.search-result-item:nth-last-child(1) {
+  padding-bottom: 15px;
 }
 
 .search-result-item:hover {
-  transform: scale(1.02); /* 살짝 확대 */
+  /*hover시 background color 변경*/
+  background-color: #f7f7f7;
 }
 
+/*검색 결과 항목들*/
 .search-result-item:last-child {
-  border-bottom: none; /* 마지막 항목의 밑줄 없애기 */
+  border-bottom: none;
 }
 
 .search-result-item div:first-child {
   font-size: 14px;
 }
-
+.search-result-item div:nth-child(2) {
+  display: none;
+}
 .search-result-item div:last-child {
   font-size: 12px;
   color: #888;
