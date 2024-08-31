@@ -138,6 +138,7 @@
   z-index: 20;
   cursor: pointer;
   background-image: url("../assets/GPS.svg"); /* SVG 파일을 배경 이미지로 설정 */
+  background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
   transition: transform 0.2s ease-in-out; /* 부드러운 확대 효과 */
