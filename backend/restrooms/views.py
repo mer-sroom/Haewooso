@@ -101,9 +101,15 @@ class NearbyRestroomsView(View):
                 nearby_restrooms.append({
                     "name": restroom.name,
                     "road_address": restroom.road_address,
+                    "jibun_address": restroom.jibun_address,
+                    "contact_number": restroom.contact_number,
+                    "opening_hours": restroom.opening_hours,
+                    "waste_treatment": restroom.waste_treatment,
+                    "cctv": restroom.cctv,
                     "latitude": restroom.latitude,
                     "longitude": restroom.longitude,
-                    "distance": distance  # 거리 정보를 추가
+                    "distance": distance,  # 거리 정보 추가
+                    "remodeling_date": restroom.remodeling_date,
                 })
 
         # 거리 기준으로 정렬하고 최대 10개까지 반환
@@ -111,6 +117,7 @@ class NearbyRestroomsView(View):
         nearby_restrooms = nearby_restrooms[:10]
 
         return JsonResponse({"items": nearby_restrooms})
+
 
 class SearchRestroomsView(View):
     def get(self, request):
@@ -148,9 +155,16 @@ class SearchRestroomsView(View):
             distance = haversine(lat, lng, restroom.latitude, restroom.longitude)
             search_results.append({
                 "name": restroom.name,
+                "road_address": restroom.road_address,
+                "jibun_address": restroom.jibun_address,
+                "contact_number": restroom.contact_number,
+                "opening_hours": restroom.opening_hours,
+                "waste_treatment": restroom.waste_treatment,
+                "cctv": restroom.cctv,
                 "latitude": restroom.latitude,
                 "longitude": restroom.longitude,
-                "distance": distance  # 거리를 결과에 포함
+                "distance": distance,  # 거리 포함
+                "remodeling_date": restroom.remodeling_date,
             })
 
         # 거리 순으로 정렬하고 상위 5개만 반환
