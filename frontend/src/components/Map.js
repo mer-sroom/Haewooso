@@ -47,7 +47,7 @@ function Map({ userLocation }) {
 
   useEffect(() => {
     if (map && restrooms.length > 0) {
-      restrooms.forEach(restroom => {
+      restrooms.forEach((restroom) => {
         const marker = new window.naver.maps.Marker({
           position: new window.naver.maps.LatLng(
             restroom.latitude,
@@ -89,7 +89,7 @@ function Map({ userLocation }) {
   }, [map, userLocation]);
 
   useEffect(() => {
-    const detailHandle = event => {
+    const detailHandle = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
         setShowDetail(false); // 외부 클릭 시 Detail을 닫음
       }
@@ -116,7 +116,7 @@ function Map({ userLocation }) {
         id="map"
         style={{
           width: "100%",
-          height: "calc(100vh - 37px)",
+          height: "calc(100vh - 57px)",
           marginTop: "0px",
         }}
       />
