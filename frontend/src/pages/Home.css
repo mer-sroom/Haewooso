@@ -12,20 +12,40 @@
   transition: transform 0.2s ease-in-out; /* 부드러운 확대 효과 */
 }
 
+/*검색창 컨테이너*/
+.search-bar-container {
+  width: 100%;
+  position: absolute; /* 검색창을 지도 위에 겹치도록 설정 */
+  top: 66px; /* 검색창의 상단 위치 설정 */
+  left: 20px;
+  z-index: 10; /* 검색창이 지도 위에 표시되도록 z-index 설정 */
+}
+
 /* 검색창 스타일 */
 .search-bar {
   width: 89%;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 25px;
+  box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.2);
   outline: none;
   font-size: 14px;
   box-sizing: border-box; /* 전체 너비를 계산할 때 패딩을 포함 */
-  position: absolute; /* 검색창을 지도 위에 겹치도록 설정 */
-  top: 66px; /* 검색창의 상단 위치 설정 */
-  box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.2);
-  z-index: 10; /* 검색창이 지도 위에 표시되도록 z-index 설정 */
   transition: transform 0.2s ease-in-out; /* 부드러운 확대 효과 */
+}
+
+/* 검색창 X 버튼-기본 상태*/
+.search-bar-clear-btn {
+  border: none;
+  position: absolute;
+  top: 15px;
+  right: 60px;
+  background-color: transparent;
+  display: none;
+}
+/*검색창 X 버튼-텍스트 입력 시*/
+.search-bar-clear-btn.activate {
+  display: block;
 }
 
 /* 드롭다운 메뉴 기본 스타일 */

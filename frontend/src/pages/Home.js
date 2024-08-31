@@ -10,6 +10,7 @@ function Home({ isLoggedIn, setIsLoggedIn }) {
   const [restrooms, setRestrooms] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [searchText, setSearchText] = useState(""); //x버튼에서 사용하기 위해 추가
 
   const handleGPSButtonClick = () => {
     if (navigator.geolocation) {
@@ -46,6 +47,7 @@ function Home({ isLoggedIn, setIsLoggedIn }) {
 
   const handleSearchChange = async e => {
     const query = e.target.value;
+    setSearchText(query);
 
     if (query) {
       setShowDropdown(true);
@@ -64,15 +66,31 @@ function Home({ isLoggedIn, setIsLoggedIn }) {
     }
   };
 
+  const handleClearSearchContent = () => {
+    if (searchText) {
+      setSearchText("");
+      setShowDropdown(false);
+    }
+  };
+
   return (
     <div className="container">
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      <input
-        type="text"
-        className="search-bar"
-        placeholder="화장실을 검색하세요..."
-        onChange={handleSearchChange}
-      />
+      <div className="search-bar-container">
+        <input
+          type="text"
+          className="search-bar"
+          placeholder="화장실을 검색하세요..."
+          value={searchText}
+          onChange={handleSearchChange}
+        />
+        <button
+          className={`search-bar-clear-btn ${showDropdown ? "activate" : ""}`}
+          onClick={handleClearSearchContent}
+        >
+          X
+        </button>
+      </div>
       <div className={`search-results ${showDropdown ? "active" : ""}`}>
         {searchResults.length > 0
           ? searchResults.map((result, index) => (
