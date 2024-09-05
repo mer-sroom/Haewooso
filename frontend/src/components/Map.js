@@ -93,28 +93,30 @@ function Map({ userLocation }) {
 
   //줌 정도에 따른 사용자 위치 마커 사이즈 조정
   useEffect(() => {
-    if (map && userCircle) {
-      const handleZoomChange = () => {
-        const zoomLevel = map.getZoom();
-        const newRadius = 30 * 2 ** (15 - zoomLevel);
-        console.log(`확대 정도 : ${zoomLevel}, 새로운 반지름 : ${newRadius}`);
-        userCircle.setRadius(newRadius);
-      };
+    setInterval(() => {
+      //왠지 모르지만 일단 됨..
+      if (map && userCircle) {
+        const handleZoomChange = () => {
+          const zoomLevel = map.getZoom();
+          const newRadius = 30 * 2 ** (15 - zoomLevel);
+          userCircle.setRadius(newRadius);
+        };
 
-      window.naver.maps.Event.addListener(
-        map,
-        "zoom_changed",
-        handleZoomChange
-      );
+        window.naver.maps.Event.addListener(
+          map,
+          "zoom_changed",
+          handleZoomChange
+        );
 
-      // return () => {//언마운트때 제거하려하면 실패,,
-      //   window.naver.maps.Event.removeListener(
-      //     map,
-      //     "zoom_changed",
-      //     handleZoomChange
-      //   );
-      // };
-    }
+        return () => {
+          window.naver.maps.Event.removeListener(
+            map,
+            "zoom_changed",
+            handleZoomChange
+          );
+        };
+      }
+    }, 0);
   }, [map, userCircle]);
 
   useEffect(() => {
