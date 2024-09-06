@@ -8,6 +8,7 @@ function Map({ userLocation }) {
   const [selectedRestroom, setSelectedRestroom] = useState(null); // 선택된 화장실 정보 저장
   const [showDetail, setShowDetail] = useState(false); // Detail을 보여줄지 여부
   const ref = useRef(null);
+  const [userCircle, setUserCircle] = useState(null); //사용자 위치 표시할 때 사용됨
 
   // 사용자의 위치를 기반으로 공중화장실 데이터를 가져오는 함수
   const fetchRestrooms = async (lat, lng) => {
@@ -47,7 +48,7 @@ function Map({ userLocation }) {
 
   useEffect(() => {
     if (map && restrooms.length > 0) {
-      restrooms.forEach((restroom) => {
+      restrooms.forEach(restroom => {
         const marker = new window.naver.maps.Marker({
           position: new window.naver.maps.LatLng(
             restroom.latitude,
@@ -69,15 +70,17 @@ function Map({ userLocation }) {
   useEffect(() => {
     if (map && userLocation) {
       // 사용자 위치에 파란색 점 표시
-      new window.naver.maps.Circle({
+      const locationCircle = new window.naver.maps.Circle({
         map: map,
         center: userLocation,
-        radius: 20, // 원의 반지름 (미터 단위)
-        fillColor: "blue",
+        radius: 30, // 초기 반지름 (미터 단위)
+        fillColor: "#01CDCE",
         fillOpacity: 0.8,
-        strokeColor: "#000",
-        strokeWeight: 2,
+        strokeColor: "white",
+        strokeWeight: 3,
       });
+
+      setUserCircle(locationCircle);
 
       // 지도를 사용자 위치로 이동
       map.setCenter(userLocation);
@@ -88,8 +91,36 @@ function Map({ userLocation }) {
     }
   }, [map, userLocation]);
 
+  //줌 정도에 따른 사용자 위치 마커 사이즈 조정
   useEffect(() => {
-    const detailHandle = (event) => {
+    setInterval(() => {
+      //왠지 모르지만 일단 됨..
+      if (map && userCircle) {
+        const handleZoomChange = () => {
+          const zoomLevel = map.getZoom();
+          const newRadius = 30 * 2 ** (15 - zoomLevel);
+          userCircle.setRadius(newRadius);
+        };
+
+        window.naver.maps.Event.addListener(
+          map,
+          "zoom_changed",
+          handleZoomChange
+        );
+
+        return () => {
+          window.naver.maps.Event.removeListener(
+            map,
+            "zoom_changed",
+            handleZoomChange
+          );
+        };
+      }
+    }, 0);
+  }, [map, userCircle]);
+
+  useEffect(() => {
+    const detailHandle = event => {
       if (ref.current && !ref.current.contains(event.target)) {
         setShowDetail(false); // 외부 클릭 시 Detail을 닫음
       }
