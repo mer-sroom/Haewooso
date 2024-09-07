@@ -66,3 +66,63 @@
   cursor: pointer;
   margin-left: 5px;
 }
+
+/* 방문자 리뷰 섹션 스타일 */
+.reviews-section {
+  margin-top: 20px;
+}
+
+.reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.reviews-header h3 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.write-review-btn {
+  background-color: #f1f1f1;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.reviews-list {
+  margin-top: 10px;
+}
+
+.review-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-user {
+  font-weight: bold;
+}
+
+.review-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.review-rating {
+  color: #ffa500;
+}
+
+.review-content {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #333;
+}
