@@ -1,12 +1,14 @@
 import React from "react";
 import "./Detail.css";
 
-function Detail({ restroom, className }) {
+function Detail({ restroom, className, onShowMore }) {
   if (!restroom) return null;
 
   return (
     <div className={className}>
-      <div id="top-bar"></div>
+      <button className="show-more-btn" onClick={onShowMore}>
+        ↑ 더 보기
+      </button>
       <h2>{restroom.name || "이름 정보 없음"}</h2>
       <div className="simple-detail-header">
         <div className="rating">
