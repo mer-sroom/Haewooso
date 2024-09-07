@@ -6,11 +6,11 @@
   border-radius: 45px 45px 0 0;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
   position: absolute;
-  bottom: 0; /* 화면의 하단에 고정 */
+  bottom: 0;
   left: 0;
   z-index: 10000;
   cursor: grab;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, height 0.3s ease-in-out; /* 자연스러운 전환 추가 */
   transform: translateY(100%); /* 처음에는 화면 아래에 숨김 */
 }
 
@@ -18,16 +18,23 @@
   transform: translateY(0); /* 화면에 나타남 */
 }
 
+.detail-container.expanded {
+  height: 60%; /* 확장 상태일 때 높이를 더 크게 */
+}
+
 .detail-container:active {
   cursor: grabbing;
 }
 
-#top-bar {
-  width: 40px;
-  height: 4px;
-  background-color: gray;
-  border-radius: 2px;
-  margin: 16px auto;
+.show-more-btn {
+  background-color: #f1f1f1;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  margin: 3px auto; /* top-bar 위치에 맞게 마진 설정 */
+  border-radius: 10px;
+  width: 100px;
+  display: block;
 }
 
 .detail-container h2 {

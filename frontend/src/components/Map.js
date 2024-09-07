@@ -6,7 +6,8 @@ function Map({ userLocation }) {
   const [restrooms, setRestrooms] = useState([]);
   const [map, setMap] = useState(null);
   const [selectedRestroom, setSelectedRestroom] = useState(null); // 선택된 화장실 정보 저장
-  const [showDetail, setShowDetail] = useState(false); // Detail을 보여줄지 여부
+  const [showDetail, setShowDetail] = useState(false); // Detail을 보여줄지 여부 (마커 클릭 시 보여짐)
+  const [expandedDetail, setExpandedDetail] = useState(false); // Detail 확장 여부 (버튼 클릭 시 확장됨)
   const ref = useRef(null);
   const [userCircle, setUserCircle] = useState(null); //사용자 위치 표시할 때 사용됨
 
@@ -59,9 +60,10 @@ function Map({ userLocation }) {
         });
 
         window.naver.maps.Event.addListener(marker, "click", function () {
-          console.log("Selected Restroom:", restroom); // 여기서 restroom 객체를 출력하여 확인
+          console.log("Selected Restroom:", restroom);
           setSelectedRestroom(restroom); // 선택된 화장실 정보를 설정
-          setShowDetail(true); // Detail을 보여주도록 설정
+          setShowDetail(true); // 마커 클릭 시 Detail을 보여줌
+          setExpandedDetail(false); // 마커를 클릭하면 확장되지 않은 상태로 시작
         });
       });
     }
@@ -94,7 +96,6 @@ function Map({ userLocation }) {
   //줌 정도에 따른 사용자 위치 마커 사이즈 조정
   useEffect(() => {
     setInterval(() => {
-      //왠지 모르지만 일단 됨..
       if (map && userCircle) {
         const handleZoomChange = () => {
           const zoomLevel = map.getZoom();
@@ -119,6 +120,7 @@ function Map({ userLocation }) {
     }, 0);
   }, [map, userCircle]);
 
+  // 외부 클릭 시 Detail을 닫음
   useEffect(() => {
     const detailHandle = event => {
       if (ref.current && !ref.current.contains(event.target)) {
@@ -131,15 +133,21 @@ function Map({ userLocation }) {
     };
   }, []);
 
+  // Detail 확장/축소 버튼 핸들러
+  const handleShowMore = () => {
+    setExpandedDetail(!expandedDetail); // 버튼 클릭 시 확장 상태를 토글
+  };
+
   return (
     <div className="map-container">
       <div ref={ref}>
         {selectedRestroom && (
           <Detail
             restroom={selectedRestroom}
-            className={
-              showDetail ? "detail-container show" : "detail-container"
-            }
+            className={`detail-container ${showDetail ? "show" : ""} ${
+              expandedDetail ? "expanded" : ""
+            }`} // show와 expanded 상태를 개별적으로 관리
+            onShowMore={handleShowMore} // 버튼 클릭 시 호출할 핸들러 전달
           />
         )}
       </div>
