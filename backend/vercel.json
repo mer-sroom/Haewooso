@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "backend/haewooso/wsgi.py",
+            "src": "dist/backend/haewooso/wsgi.py",
             "use": "@ardnt/vercel-python-wsgi"
         }
     ],
