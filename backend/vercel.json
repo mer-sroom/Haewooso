@@ -2,14 +2,14 @@
     "version": 2,
     "builds": [
         {
-            "src": "backend/haewooso/wsgi.py",
-            "use": "@ardnt/vercel-python-wsgi"
+            "src": "haewooso/wsgi.py",
+            "use": "@vercel/python"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "backend/haewooso/wsgi.py"
+            "dest": "haewooso/wsgi.py"
         }
     ]
 }
